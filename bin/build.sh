@@ -4,12 +4,12 @@ BUILD_NO=$(cat .build-counter)
 BUILD_NO_NEXT=$((${BUILD_NO}+1))
 echo "${BUILD_NO_NEXT}" > .build-counter
 
-GITHUB_REPO_NAME=Bkjeholt/${1}
+GITHUB_REPO_NAME=bkjeholt/${1}
 GITHUB_BRANCH=${2}
 
 DOCKER_HUB_NAME=bkjeholt
 
-BUILD_ARCHITECTURE=rpi
+BUILD_ARCHITECTURE=bin/get-architecture.sh
 
 DOCKER_IMAGE_NAME=${1}
 DOCKER_IMAGE_BASE_TAG=${GITHUB_BRANCH}-${BUILD_NO}
