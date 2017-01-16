@@ -9,4 +9,4 @@ chmod 755 development/bin/*
 
 ln -s development/bin bin
 
-cp development/.build_counter . 
+cp development/.build-counter . 
