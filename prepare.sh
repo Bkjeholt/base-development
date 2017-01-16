@@ -1,7 +1,7 @@
 #!/bin/bash -f
 
-rm -r development
-rm -r bin
+yes | rm -r development
+yes | rm -r bin
 
 git clone git://github.com/bkjeholt/development.git
 
