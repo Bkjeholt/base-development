@@ -6,5 +6,3 @@ rm -r bin
 git clone git://github.com/bkjeholt/development.git
 
 ln -s development/bin bin
-
-cp countere
