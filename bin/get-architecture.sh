@@ -2,7 +2,7 @@
  
 ARCHITECTURE=$(uname -m)
  
-if [ "${ARCHITECTURE}" = "X86_64" ]; 
+if [ "${ARCHITECTURE}" = "x86_64" ]; 
     then
         ARCHITECTURE_SHORT_NAME=x86
     else
