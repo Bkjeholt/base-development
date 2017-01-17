@@ -9,7 +9,7 @@ GITHUB_BRANCH=${2}
 
 DOCKER_HUB_NAME=bkjeholt
 
-BUILD_ARCHITECTURE=${sh bin/get-architecture.sh}
+BUILD_ARCHITECTURE=$(sh bin/get-architecture.sh)
 
 DOCKER_IMAGE_NAME=${1}
 DOCKER_IMAGE_BASE_TAG=${GITHUB_BRANCH}-${BUILD_NO}
