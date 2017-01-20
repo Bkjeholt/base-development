@@ -34,13 +34,12 @@ echo " IMAGE ID:           ${DOCKER_DEVELOPMENT_IMAGE_ID} "
 DOCKER_IMAGE_TAGS=$(docker images --format "{{.Tag}} {{.ID}}" | \
                     grep $DOCKER_DEVELOPMENT_IMAGE_ID | \
                     grep -v ${DOCKER_IMAGE_DEVELOPMENT_TAG} | \
-                    sed 's/-x86[^\n]*//g' | \
-                    sed 's/dev-//g')
+                    sed 's/-x86[^\n]*//g' )
 
 echo " IMAGE TAGS:         ${DOCKER_IMAGE_TAGS} "
 
-DOCKER_IMAGE_BRANCH=$(echo "${DOCKER_IMAGE_TAGS}" | sed 's/-[^\n]*//g')
-DOCKER_IMAGE_BUILD_NO=$(echo "${DOCKER_IMAGE_TAGS}" | sed 's/[^\n]*-//g')
+DOCKER_IMAGE_BRANCH=$(echo "${DOCKER_IMAGE_TAGS}" | sed 's/dev-//g'| sed 's/-[^\n]*//g' | head -1)
+DOCKER_IMAGE_BUILD_NO=$(echo "${DOCKER_IMAGE_TAGS}" | sed 's/dev-[^-]*-//g')
 
 echo "-------------------------------------------------------------------------------"
 echo "Release the following repositories "
