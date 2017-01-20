@@ -44,15 +44,18 @@ echo " Dev. docker images: ${GITHUB_REPO_NAME}:${DOCKER_IMAGE_DEVELOPMENT_TAG} "
 echo " and images with the same image id: "
 
 docker images | grep ${DOCKER_DEVELOPMENT_IMAGE_ID}
+
 echo " "
 echo " Rel. docker images: ${DOCKER_REPO_NAME}:${DOCKER_IMAGE_RELEASE_TAG} "
 echo "                     ${DOCKER_REPO_NAME}:${DOCKER_IMAGE_RELEASE_BRANCH_TAG} "
 echo "                     ${DOCKER_REPO_NAME}:${DOCKER_IMAGE_RELEASE_FULL_TAG} "
 echo "-------------------------------------------------------------------------------"
 
-docker tag ${DOCKER_REPO_NAME}:${DOCKER_IMAGE_DEVELOPMENT_TAG}        ${DOCKER_REPO_NAME}:${DOCKER_IMAGE_RELEASE_TAG}
-docker tag ${DOCKER_REPO_NAME}:${DOCKER_IMAGE_DEVELOPMENT_BRANCH_TAG} ${DOCKER_REPO_NAME}:${DOCKER_IMAGE_RELEASE_BRANCH_TAG}
-docker tag ${DOCKER_REPO_NAME}:${DOCKER_IMAGE_DEVELOPMENT_FULL_TAG}   ${DOCKER_REPO_NAME}:${DOCKER_IMAGE_FULL_TAG}
+docker tag ${DOCKER_REPO_NAME}:${DOCKER_IMAGE_DEVELOPMENT_TAG} ${DOCKER_REPO_NAME}:${DOCKER_IMAGE_RELEASE_TAG}
+docker tag ${DOCKER_REPO_NAME}:${DOCKER_IMAGE_DEVELOPMENT_TAG} ${DOCKER_REPO_NAME}:${DOCKER_IMAGE_RELEASE_BRANCH_TAG}
+docker tag ${DOCKER_REPO_NAME}:${DOCKER_IMAGE_DEVELOPMENT_TAG} ${DOCKER_REPO_NAME}:${DOCKER_IMAGE_RELEASE_FULL_TAG}
+
+docker images | grep ${DOCKER_DEVELOPMENT_IMAGE_ID}
 
 echo "-------------------------------------------------------------------------------"
 echo "Push the following images to http://hub.docker.com "
