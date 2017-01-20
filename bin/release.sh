@@ -34,7 +34,7 @@ echo " IMAGE ID:           ${DOCKER_DEVELOPMENT_IMAGE_ID} "
 DOCKER_IMAGE_TAGS=$(docker images --format "{{.Tag}} {{.ID}}" | \
                     grep $DOCKER_DEVELOPMENT_IMAGE_ID | \
                     grep -v ${DOCKER_IMAGE_DEVELOPMENT_TAG} | \
-                    sed 's/-x86[^\n]*//g' )
+                    sed 's/-${BUILD_ARCHITECTURE}[^\n]*//g' )
 
 echo " IMAGE TAGS:         ${DOCKER_IMAGE_TAGS} "
 
