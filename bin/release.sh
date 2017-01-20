@@ -21,13 +21,13 @@ echo "--------------------------------------------------------------------------
 echo "Release the following repositories "
 echo " Repository:         ${GITHUB_REPO_NAME} "
 echo " Branch:             ${GITHUB_BRANCH} "
-echo " Dev. docker images: ${DOCKER_REPO_NAME}:${DOCKER_IMAGE_DEVELOPMENT_TAG} "
-echo "                     ${1}:${DOCKER_IMAGE_DEVELOPMENT_BRANCH_TAG} "
-echo " Rel. docker images: ${DOCKER_REPO_NAME}:${DOCKER_IMAGE_RELEASE_TAG} "
-echo "                     ${DOCKER_REPO_NAME}:${DOCKER_IMAGE_RELEASE_BRANCH_TAG} "
+echo " Dev. docker images: ${GITHUB_REPO_NAME}:${DOCKER_IMAGE_DEVELOPMENT_TAG} "
+echo "                     ${GITHUB}:${DOCKER_IMAGE_DEVELOPMENT_BRANCH_TAG} "
+echo " Rel. docker images: ${GITHUB_REPO_NAME}:${DOCKER_IMAGE_RELEASE_TAG} "
+echo "                     ${GITHUB_REPO_NAME}:${DOCKER_IMAGE_RELEASE_BRANCH_TAG} "
 echo "-------------------------------------------------------------------------------"
 
-DOCKER_DEVELOPMENT_IMAGE_ID=$(docker images -q $DOCKER_REPO_NAME:${DOCKER_IMAGE_DEVELOPMENT_TAG})
+DOCKER_DEVELOPMENT_IMAGE_ID=$(docker images -q $GITHUB_REPO_NAME:${DOCKER_IMAGE_DEVELOPMENT_TAG})
 
 echo " IMAGE ID:           ${DOCKER_DEVELOPMENT_IMAGE_ID} "
 
@@ -47,8 +47,8 @@ echo "Release the following repositories "
 echo " Repository:         ${GITHUB_REPO_NAME} "
 echo " Branch:             ${DOCKER_IMAGE_BRANCH} "
 echo " Build number:       ${DOCKER_IMAGE_BUILD_NO} "
-echo " Dev. docker images: ${DOCKER_REPO_NAME}:${DOCKER_IMAGE_DEVELOPMENT_TAG} "
-echo "                     ${1}:${DOCKER_IMAGE_DEVELOPMENT_BRANCH_TAG} "
+echo " Dev. docker images: ${GITHUB_REPO_NAME}:${DOCKER_IMAGE_DEVELOPMENT_TAG} "
+echo "                     ${GITHUB_REPO_NAME}:${DOCKER_IMAGE_DEVELOPMENT_BRANCH_TAG} "
 echo " Rel. docker images: ${DOCKER_REPO_NAME}:${DOCKER_IMAGE_RELEASE_TAG} "
 echo "                     ${DOCKER_REPO_NAME}:${DOCKER_IMAGE_RELEASE_BRANCH_TAG} "
 echo "-------------------------------------------------------------------------------"
