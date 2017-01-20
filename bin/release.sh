@@ -39,7 +39,7 @@ DOCKER_IMAGE_TAGS=$(docker images --format "{{.Tag}} {{.ID}}" | \
 echo " IMAGE TAGS:         ${DOCKER_IMAGE_TAGS} "
 
 DOCKER_IMAGE_BRANCH=$(echo "${DOCKER_IMAGE_TAGS}" | sed 's/dev-//g'| sed 's/-[^\n]*//g' | head -1)
-DOCKER_IMAGE_BUILD_NO=$(echo "${DOCKER_IMAGE_TAGS}" | sed 's/dev-[^-]*-//g')
+DOCKER_IMAGE_BUILD_NO=$(echo "${DOCKER_IMAGE_TAGS}" | sed 's/dev-[^-]*-//g' | sed 's/-[^\n]*//g' | head -1)
 
 echo "-------------------------------------------------------------------------------"
 echo "Release the following repositories "
