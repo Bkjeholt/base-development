@@ -11,18 +11,60 @@ DOCKER_HUB_NAME=bkjeholt
 
 BUILD_ARCHITECTURE=$(sh bin/get-architecture.sh)
 DOCKER_IMAGE_DEVELOPMENT_TAG=dev-${BUILD_ARCHITECTURE}
-DOCKER_IMAGE_RELEASE_TAG=${GITHUB_BRANCH}-${BUILD_ARCHITECTURE}
+DOCKER_IMAGE_DEVELOPMENT_BRANCH_TAG=dev-${GITHUB_BRANCH}-${BUILD_ARCHITECTURE}
+DOCKER_IMAGE_RELEASE_TAG=latest-${BUILD_ARCHITECTURE}
+DOCKER_IMAGE_RELEASE_BRANCH_TAG=${GITHUB_BRANCH}-${BUILD_ARCHITECTURE}
+
+# Get the docker image identity for the dev-xxx tag
+
+echo "-------------------------------------------------------------------------------"
+echo "Release the following repositories "
+echo " Repository:         ${GITHUB_REPO_NAME} "
+echo " Branch:             ${GITHUB_BRANCH} "
+echo " Dev. docker images: ${DOCKER_REPO_NAME}:${DOCKER_IMAGE_DEVELOPMENT_TAG} "
+echo "                     ${1}:${DOCKER_IMAGE_DEVELOPMENT_BRANCH_TAG} "
+echo " Rel. docker images: ${DOCKER_REPO_NAME}:${DOCKER_IMAGE_RELEASE_TAG} "
+echo "                     ${DOCKER_REPO_NAME}:${DOCKER_IMAGE_RELEASE_BRANCH_TAG} "
+echo "-------------------------------------------------------------------------------"
 
 DOCKER_DEVELOPMENT_IMAGE_ID=$(docker images -q $DOCKER_REPO_NAME:${DOCKER_IMAGE_DEVELOPMENT_TAG})
+DOCKER_IMAGE_TAGS=$(docker images --format "{{.Tag}} {{.ID}}" | \
+                    grep $DOCKER_IMAGE_ID | \
+                    grep -v ${DOCKER_IMAGE_DEVELOPMENT_TAG} | \
+                    sed 's/-x86[^\n]*//g' | \
+                    sed 's/dev-//g')
+DOCKER_IMAGE_BRANCH=$(echo "${DOCKER_IMAGE_TAGS}" | sed 's/-[^\n]*//g')
+DOCKER_IMAGE_BUILD_NO=$(echo "${DOCKER_IMAGE_TAGS}" | sed 's/[^\n]*-//g')
 
-docker tag $DOCKER_REPO_NAME:${DOCKER_IMAGE_DEVELOPMENT_TAG} $DOCKER_REPO_NAME:${DOCKER_IMAGE_RELEASE_TAG}
+echo "-------------------------------------------------------------------------------"
+echo "Release the following repositories "
+echo " Repository:         ${GITHUB_REPO_NAME} "
+echo " Branch:             ${DOCKER_IMAGE_BRANCH} "
+echo " Build number:       ${DOCKER_IMAGE_BUILD_NO} "
+echo " Dev. docker images: ${DOCKER_REPO_NAME}:${DOCKER_IMAGE_DEVELOPMENT_TAG} "
+echo "                     ${1}:${DOCKER_IMAGE_DEVELOPMENT_BRANCH_TAG} "
+echo " Rel. docker images: ${DOCKER_REPO_NAME}:${DOCKER_IMAGE_RELEASE_TAG} "
+echo "                     ${DOCKER_REPO_NAME}:${DOCKER_IMAGE_RELEASE_BRANCH_TAG} "
+echo "-------------------------------------------------------------------------------"
 
-DOCKER_IMAGE_TAG=$(docker images --format "{{.Tag}} {{.ID}}" | grep $DOCKER_IMAGE_ID | grep -v latest | sed 's/ [^\n]*//g')
- 
-DOCKER_IMAGE=$DOCKER_IMAGE_NAME:$DOCKER_IMAGE_TAG
+exit 0
 
+docker tag ${DOCKER_REPO_NAME}:${DOCKER_IMAGE_DEVELOPMENT_TAG} \
+           ${DOCKER_REPO_NAME}:${DOCKER_IMAGE_RELEASE_TAG}
+docker tag ${DOCKER_REPO_NAME}:${DOCKER_IMAGE_DEVELOPMENT_BRANCH_TAG} \
+           ${DOCKER_REPO_NAME}:${DOCKER_IMAGE_RELEASE_BRANCH_TAG}
 
+echo "-------------------------------------------------------------------------------"
+echo "Push the following images to http://hub.docker.com "
+echo " Repository:         bkjeholt "
+echo " Docker images:      ${DOCKER_REPO_NAME}:${DOCKER_IMAGE_RELEASE_TAG} "
+echo "                     ${DOCKER_REPO_NAME}:${DOCKER_IMAGE_RELEASE_BRANCH_TAG} "
+echo "-------------------------------------------------------------------------------"
 
+docker push ${DOCKER_REPO_NAME}:${DOCKER_IMAGE_RELEASE_TAG}
+docker push ${DOCKER_REPO_NAME}:${DOCKER_IMAGE_RELEASE_BRANCH_TAG}
+
+exit 0
 
 DOCKER_IMAGE_NAME=${1}
 DOCKER_IMAGE_BASE_TAG=${GITHUB_BRANCH}-${BUILD_NO}
