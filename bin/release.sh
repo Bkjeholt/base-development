@@ -5,6 +5,7 @@ BUILD_NO_NEXT=$((${BUILD_NO}+1))
 echo "${BUILD_NO_NEXT}" > .build-counter
 
 GITHUB_REPO_NAME=bkjeholt/${1}
+DOCKER_REPO_NAME=${GITHUB_REPO_NAME}
 
 DOCKER_HUB_NAME=bkjeholt
 
