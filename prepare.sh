@@ -11,5 +11,6 @@ ln -s development/bin bin
 
 if [ ! -f .build-counter ]
   then
-    cp development/.build-counter . 
+    echo "1" > .build-counter
+#    cp development/.build-counter . 
 fi
