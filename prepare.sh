@@ -9,7 +9,7 @@ chmod 755 development/bin/*
 
 ln -s development/bin bin
 
-if [ ! -f .build-counter ]
+if [ ! -e .build-counter ]
   then
     cp development/.build-counter . 
 fi
